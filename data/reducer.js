@@ -306,6 +306,16 @@ const Reducer = (state, action) => {
           ...state,
           storePayments: action.storePayments
         }
+      case 'SET_MESSAGE':
+        return {
+          ...state,
+          message: action.message
+        }
+      case 'CLEAR_MESSAGE':
+        return {
+          ...state,
+          message: ''
+        }
       default:
         return state
     }

@@ -9,7 +9,7 @@ const Store = props => {
   const initState = {
     categories: [], 
     locations: [], 
-    countrie: [],
+    countries: [],
     stores: [], 
     basket: '', 
     users: [],
@@ -34,7 +34,8 @@ const Store = props => {
     alarms: [],
     ratings: [],
     invitations: [],
-    storePayments: []
+    storePayments: [],
+    message: ''
   }
   const [state, dispatch] = useReducer(Reducer, initState)
   useEffect(() => {

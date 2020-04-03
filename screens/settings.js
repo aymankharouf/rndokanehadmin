@@ -20,6 +20,7 @@ const Settings = props => {
           margin-10
           backgroundColor={Colors[`${randomColors[s.id].background}10`]}
           key={s.id}
+          onPress={() => props.navigation.navigate(s.path)}
         />
       )}
     </SafeAreaView>

@@ -2,7 +2,6 @@ import firebase, { prodApp } from './firebase'
 import labels from './labels'
 import { setup, randomColors } from './config'
 import moment from 'moment'
-import { Toast } from 'native-base'
 
 /*const newKey = firebase.database().ref().child('categories').push().key
 let updates = {}
@@ -24,21 +23,21 @@ export const getMessage = (props, error) => {
 }
 
 export const showMessage = messageText => {
-  Toast.show({
+  /*Toast.show({
     text: messageText,
     buttonText: "Ok",
     type: "success",
     duration: 3000
-  })
+  })*/
 }
 
 export const showError = messageText => {
-  Toast.show({
+  /*Toast.show({
     text: messageText,
     buttonText: "Ok",
     type: "danger",
     duration: 3000
-  })
+  })*/
 }
 
 export const quantityText = (quantity, weight) => {

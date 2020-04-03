@@ -1,41 +1,53 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { View, TextField, Button, Spacings, Keyboard } from 'react-native-ui-lib'
+import { TextField, FloatingButton } from 'react-native-ui-lib'
 import { StoreContext } from '../data/store'
+import labels from '../data/labels'
+import { TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { addCountry, getMessage } from '../data/actions'
+import RNToast from './rntoast'
 
 const AddCountry = props => {
-  const { state } = useContext(StoreContext)
+  const { state, dispatch } = useContext(StoreContext)
   const [name, setName] = useState('')
-  const [error, setError] = useState('')
+  const [isValid, setIsValid] = useState(false)
   useEffect(() => {
-    if (error) {
-      showError(error)
-      setError('')
-    }
-  }, [error])
+    setIsValid(name ? true : false)
+  }, [name])
   const handleSubmit = () => {
     try{
-      if (state.countries.includes(name)) {
+      if (state.countries.find(c => c.name === name)) {
         throw new Error('duplicateName')
       }
       addCountry(name)
-      showMessage(labels.addSuccess)
+      dispatch({type: 'SET_MESSAGE', message: {type: 'm', text: labels.addSuccess}})
       props.navigation.goBack()
     } catch(err) {
-			setError(getMessage(props, err))
+      dispatch({type: 'SET_MESSAGE', message: {type: 'e', text: getMessage(props, err)}})
 		}
   }
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <TextField
-        text70
-        containerStyle={{marginBottom: INPUT_SPACING}}
-        floatingPlaceholder
-        placeholder="FloatingPlaceholder"
-        onChangeText={e => console.log('ee == ', e)}
-        floatOnFocus
-      />    
-    </SafeAreaView>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <SafeAreaView style={{ flex: 1, margin: 10 }}>
+        <TextField
+          text70
+          containerStyle={{marginBottom: 1}}
+          floatingPlaceholder
+          placeholder="FloatingPlaceholder"
+          onChangeText={e => setName(e)}
+          floatOnFocus
+        />
+        <FloatingButton
+          visible={isValid}
+          button={{
+            label: labels.submit, 
+            onPress: () => handleSubmit(), 
+            labelStyle: {fontWeight: '400'}
+          }}
+        />
+        <RNToast />
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   )
 }
 

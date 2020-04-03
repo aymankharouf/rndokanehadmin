@@ -64,7 +64,7 @@ const LoginStackScreen = props => {
         name="Login" 
         component={Login} 
         options={{ 
-          headerLeft: () => <Ionicons name='ios-arrow-back' onPress={() => props.navigation.navigate('Home')}/>,
+          headerLeft: () => <Ionicons name='md-arrow-forward' size={24} style={{ margin: 10 }} onPress={() => props.navigation.navigate('Home')}/>,
         }}
       />
       <LoginStack.Screen name='Register' component={Register} />
@@ -84,7 +84,7 @@ const SettingsStackScreen = props => {
         component={Settings} 
         options={{
           title: labels.settings,
-          headerLeft: () => <Ionicons name='ios-arrow-back' size={32} nPress={() => props.navigation.navigate('Home')}/>,
+          headerLeft: () => <Ionicons name='md-arrow-forward' size={24} style={{ margin: 10 }} onPress={() => props.navigation.navigate('Home')}/>,
         }}
       />
       <SettingsStack.Screen name='Countries' component={Countries} options={{title: labels.countries}} />
