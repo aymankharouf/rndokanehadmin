@@ -39,12 +39,12 @@ const Store = props => {
   }
   const [state, dispatch] = useReducer(Reducer, initState)
   useEffect(() => {
-    firebase.database().ref('countries').on('value', docs => {
-      let countries = []
+    firebase.database().ref('categories').on('value', docs => {
+      let categories = []
       docs.forEach(doc => {
-        countries.push({...doc.val(), id:doc.key})
+        categories.push({...doc.val(), id:doc.key})
       })
-      dispatch({type: 'SET_COUNTRIES', countries})
+      dispatch({type: 'SET_CATEGORIES', categories})
     })
     firebase.database().ref('packs').on('value', docs => {
       let packs = []

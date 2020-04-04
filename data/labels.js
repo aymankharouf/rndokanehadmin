@@ -1,7 +1,7 @@
 const labels = {
   offers: 'العروض',
   registerTitle: 'تسجيل جديد',
-  name: 'Name',
+  name: 'الاسم',
   mobile: 'الموبايل',
   password: 'كلمة السر',
   location: 'المنطقة',
@@ -378,7 +378,7 @@ const labels = {
   fees: 'Fees',
   view: 'View',
   wieght: 'Weight',
-  home: 'الصفحة الرئيسية'
+  home: 'الصفحة الرئيسية',
 }
 
 export default labels

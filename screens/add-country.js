@@ -28,12 +28,12 @@ const AddCountry = props => {
   }
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <SafeAreaView style={{ flex: 1, margin: 10 }}>
+      <SafeAreaView style={{flex: 1, margin: 10}}>
         <TextField
           text70
           containerStyle={{marginBottom: 1}}
           floatingPlaceholder
-          placeholder="FloatingPlaceholder"
+          placeholder={labels.name}
           onChangeText={e => setName(e)}
           floatOnFocus
         />

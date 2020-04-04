@@ -26,12 +26,13 @@ const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignContent: 'center'
+    alignItems: 'center'
   },
   text: {
-    fontSize: 16,
+    fontSize: 20,
     color: 'white',
-    margin: 10
+    marginHorizontal: 10,
+    paddingVertical: 10
   }
 })
 

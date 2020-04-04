@@ -22,24 +22,6 @@ export const getMessage = (props, error) => {
   return labels[errorCode] || labels['unknownError']
 }
 
-export const showMessage = messageText => {
-  /*Toast.show({
-    text: messageText,
-    buttonText: "Ok",
-    type: "success",
-    duration: 3000
-  })*/
-}
-
-export const showError = messageText => {
-  /*Toast.show({
-    text: messageText,
-    buttonText: "Ok",
-    type: "danger",
-    duration: 3000
-  })*/
-}
-
 export const quantityText = (quantity, weight) => {
   return weight && weight !== quantity ? `${quantityText(quantity)}(${quantityText(weight)})` : quantity === Math.trunc(quantity) ? quantity.toString() : quantity.toFixed(3)
 }

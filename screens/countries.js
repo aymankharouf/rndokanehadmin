@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { ThemeManager, Colors, ListItem, Text, FloatingButton } from 'react-native-ui-lib'
+import { ThemeManager, Colors, ListItem, Text, FloatingButton, Button } from 'react-native-ui-lib'
 import { StoreContext } from '../data/store'
 import { FlatList, StyleSheet } from 'react-native'
 import labels from '../data/labels'
@@ -16,14 +16,20 @@ const Countries = props => {
   const renderItem = ({ item }) => {
     return (
       <ListItem
-        style={{ paddingLeft: 10, backgroundColor: item.id === selectedId ? Colors.dark60 : null}}
+        style={{justifyContent: 'space-between', paddingHorizontal: 10, backgroundColor: item.id === selectedId ? Colors.dark60 : null}}
         containerStyle={styles.border}
       >
-        <ListItem.Part containerStyle={{ flex: 1 }}>
-          <Text dark10 text70>{item.name}</Text>
+        <ListItem.Part>
+          <Text style={{fontSize: 16}}>{item.name}</Text>
         </ListItem.Part>
         <ListItem.Part>
-          <Ionicons name='ios-close' style={{ fontSize: 40, margin: 12, color: 'red' }} onPress={() => showDialog(item.id)}/>
+          <Button
+            style={{margin: 10}}
+            link
+            onPress={() => showDialog(item.id)}
+          >
+            <Ionicons name='ios-close' style={{fontSize: 40, margin: 10, color: 'red'}} />
+          </Button>
         </ListItem.Part>
       </ListItem>
     )
@@ -42,9 +48,9 @@ const Countries = props => {
     setDialogVisible(false)
   }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       {state.countries.length === 0 ?
-        <Text dark10 text70>{labels.noData}</Text>
+        <Text>{labels.noData}</Text>
       : <FlatList 
           data={state.countries} 
           renderItem={renderItem} 
@@ -67,7 +73,7 @@ const Countries = props => {
 const styles = StyleSheet.create({
   border: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: ThemeManager.dividerColor,
+    borderColor: ThemeManager.dividerColor
   }
 })
 
