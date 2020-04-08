@@ -931,12 +931,13 @@ export const deleteCategory = (category, categories) => {
 }
 
 export const getCategoryName = (category, categories) => {
-  if (category.parentId === '0') {
-    return category.name
-  } else {
-    const categoryParent = categories.find(c => c.id === category.parentId)
-    return getCategoryName(categoryParent, categories) + '-' + category.name
-  }
+  // if (category.parentId === '0') {
+  //   return category.name
+  // } else {
+  //   const categoryParent = categories.find(c => c.id === category.parentId)
+  //   return getCategoryName(categoryParent, categories) + '-' + category.name
+  // }
+  return category.name
 }
 
 export const resolvePasswordRequest = requestId => {

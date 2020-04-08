@@ -35,16 +35,20 @@ const Store = props => {
     ratings: [],
     invitations: [],
     storePayments: [],
-    message: ''
+    message: '',
+    categoriesStatus: '',
+    productsStatus: ''
   }
   const [state, dispatch] = useReducer(Reducer, initState)
   useEffect(() => {
+    const startTime = new Date()
     firebase.database().ref('categories').on('value', docs => {
       let categories = []
       docs.forEach(doc => {
         categories.push({...doc.val(), id:doc.key})
       })
       dispatch({type: 'SET_CATEGORIES', categories})
+      dispatch({type: 'FINISH_CATEGORIES'})
     })
     firebase.database().ref('packs').on('value', docs => {
       let packs = []
@@ -59,6 +63,7 @@ const Store = props => {
       })
       dispatch({type: 'SET_PACKS', packs})
       dispatch({type: 'SET_PACK_PRICES', packPrices})
+      console.log('finish packs')
     })
     firebase.database().ref('password-requests').on('value', docs => {
       let passwordRequests = []
@@ -97,6 +102,7 @@ const Store = props => {
             products.push({...doc.val(), id:doc.key})
           })
           dispatch({type: 'SET_PRODUCTS', products})
+          dispatch({type: 'FINISH_PRODUCTS'})
         })
       }
     })

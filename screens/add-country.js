@@ -30,7 +30,6 @@ const AddCountry = props => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={{flex: 1, margin: 10}}>
         <TextField
-          text70
           containerStyle={{marginBottom: 1}}
           floatingPlaceholder
           placeholder={labels.name}

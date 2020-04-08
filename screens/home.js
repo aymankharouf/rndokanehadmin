@@ -1,29 +1,29 @@
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Button, Colors } from 'react-native-ui-lib'
+import { Button } from 'react-native-ui-lib'
 import labels from '../data/labels'
 import { randomColors } from '../data/config'
 
 const Home = props => {
   const [mainPages] = useState(() => [
-    {id: 0, name: labels.orders, path: 'Orders'},
-    {id: 1, name: labels.stores, path: 'Stores'},
-    {id: 2, name: labels.products, path: 'Products'},
-    {id: 3, name: labels.purchases, path: 'Purchases'},
-    {id: 4, name: labels.customers, path: 'Customers'},
-    {id: 5, name: labels.stock, path: 'Stock'},
-    {id: 6, name: labels.spendings, path: 'Spendings'},
-    {id: 7, name: labels.notifications, path: 'Notifications'},
+    {name: labels.orders, path: 'Orders'},
+    {name: labels.stores, path: 'Stores'},
+    {name: labels.products, path: 'Products'},
+    {name: labels.purchases, path: 'Purchases'},
+    {name: labels.customers, path: 'Customers'},
+    {name: labels.stock, path: 'Stock'},
+    {name: labels.spendings, path: 'Spendings'},
+    {name: labels.notifications, path: 'Notifications'},
   ])
+  let i = 0
   return (
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{flex: 1}}>
       {mainPages.map(s =>
         <Button
           fullWidth
           label={s.name}
-          margin-10
-          backgroundColor={Colors[`${randomColors[s.id].background}10`]}
-          key={s.id}
+          style={{margin: 5, backgroundColor: randomColors[i++]}}
+          key={i}
           onPress={() => props.navigation.navigate(s.path)}
         />
       )}

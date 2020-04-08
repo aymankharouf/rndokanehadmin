@@ -8,23 +8,7 @@ export const setup = {
   profit: 0.05
 }
 
-export const randomColors = [
-  {id: 0, background: 'red', foreground: 'white'},
-  {id: 1, background: 'green', foreground: 'white'},
-  {id: 2, background: 'blue', foreground: 'white'},
-  {id: 3, background: 'pink', foreground: 'black'},
-  {id: 4, background: 'yellow', foreground: 'black'},
-  {id: 5, background: 'orange', foreground: 'white'},
-  {id: 6, background: 'purple', foreground: 'white'},
-  {id: 7, background: 'deeppurple', foreground: 'black'},
-  {id: 8, background: 'lightblue', foreground: 'black'},
-  {id: 9, background: 'teal', foreground: 'black'},
-  {id: 10, background: 'teal', foreground: 'black'},
-  {id: 11, background: 'teal', foreground: 'black'},
-  {id: 12, background: 'teal', foreground: 'black'},
-  {id: 13, background: 'teal', foreground: 'black'},
-  {id: 14, background: 'teal', foreground: 'black'},
-]
+export const randomColors = ['#0043A4', '#00848C', '#41B619', '#FFD600', '#EF2FA2', '#F85C50', '#FF9CA1', '#2E3F7F', '#FF2970', '#F6522E', '#782FEF']
 
 export const orderStatus = [
   {id: 'n', name: 'قيد الموافقة'},

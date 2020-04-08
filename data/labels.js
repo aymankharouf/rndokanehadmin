@@ -379,6 +379,8 @@ const labels = {
   view: 'View',
   wieght: 'Weight',
   home: 'الصفحة الرئيسية',
+  actions: 'اجراءات',
+  showAll: 'اظهار الكل'
 }
 
 export default labels

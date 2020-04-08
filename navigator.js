@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
@@ -17,21 +17,44 @@ import AddLocation from './screens/add-location'
 import Products from './screens/products'
 import AddProduct from './screens/add-product'
 import ProductPacks from './screens/product-packs'
+import ProductDetails from './screens/product-details'
 import AddPack from './screens/add-pack'
 import { Ionicons } from '@expo/vector-icons'
+import { Button } from 'react-native-ui-lib'
 
 const LogoTitle = () => {
   return (
     <Image
-      style={{ width: 130 }}
+      style={{width: 130}}
       source={require('./assets/dokaneh_logo.png')}
     />
   )
 }
-
+const BackButton = props => {
+  return (
+    <Button
+      style={{margin: 10}}
+      link
+      onPress={() => props.navigation.navigate('Home')}
+    >
+      <Ionicons name='md-arrow-forward' style={{fontSize: 24}} />
+    </Button>
+  )
+}
+const MenuButton = props => {
+  return (
+    <Button
+      style={{margin: 10}}
+      link
+      onPress={() => props.navigation.openDrawer()}
+    >
+      <Ionicons name='md-menu' style={{fontSize: 24}} />
+    </Button>
+  )
+}
 const HomeStack = createStackNavigator()
 const HomeStackScreen = props => {
-  return (
+    return (
     <HomeStack.Navigator 
       screenOptions={{...TransitionPresets.SlideFromRightIOS}}
     >
@@ -41,15 +64,16 @@ const HomeStackScreen = props => {
         options={{ 
           headerTitle: props => <LogoTitle {...props} />,
           headerTitleAlign: "center",
-          headerLeft: () => <Ionicons name='md-menu' size={24} style={{ padding: 10 }} onPress={() => props.navigation.openDrawer()}/>,
+          headerLeft: () => <MenuButton {...props} />,
         }}
       />
-      <HomeStack.Screen name='Basket' component={Basket} options={{ title: labels.basket }} />
-      <HomeStack.Screen name='Products' component={Products} options={{ title: labels.products }} />
-      <HomeStack.Screen name='AddProduct' component={AddProduct} options={{ title: labels.addProduct }} />
-      <HomeStack.Screen name='ProductPacks' component={ProductPacks} options={{ title: labels.productPacks }} />
-      <HomeStack.Screen name='AddPack' component={AddPack} options={{ title: labels.addPack }} />
-      <HomeStack.Screen name='PackDetails' component={AddPack} options={{ title: labels.addPack }} />
+      <HomeStack.Screen name='Basket' component={Basket} options={{title: labels.basket}} />
+      <HomeStack.Screen name='Products' component={Products} options={{title: labels.products}} />
+      <HomeStack.Screen name='AddProduct' component={AddProduct} options={{title: labels.addProduct}} />
+      <HomeStack.Screen name='ProductPacks' component={ProductPacks} options={{title: labels.productPacks}} />
+      <HomeStack.Screen name='ProductDetails' component={ProductDetails} options={{title: labels.productDetails}} />
+      <HomeStack.Screen name='AddPack' component={AddPack} options={{title: labels.addPack}} />
+      <HomeStack.Screen name='PackDetails' component={AddPack} options={{title: labels.addPack}} />
     </HomeStack.Navigator>  
   )
 }
@@ -64,7 +88,7 @@ const LoginStackScreen = props => {
         name="Login" 
         component={Login} 
         options={{ 
-          headerLeft: () => <Ionicons name='md-arrow-forward' size={24} style={{ margin: 10 }} onPress={() => props.navigation.navigate('Home')}/>,
+          headerLeft: () => <BackButton {...props} />,
         }}
       />
       <LoginStack.Screen name='Register' component={Register} />
@@ -84,7 +108,7 @@ const SettingsStackScreen = props => {
         component={Settings} 
         options={{
           title: labels.settings,
-          headerLeft: () => <Ionicons name='md-arrow-forward' size={24} style={{ margin: 10 }} onPress={() => props.navigation.navigate('Home')}/>,
+          headerLeft: () => <BackButton {...props} />,
         }}
       />
       <SettingsStack.Screen name='Countries' component={Countries} options={{title: labels.countries}} />
