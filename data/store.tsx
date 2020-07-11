@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react'
+import React from 'react'
 import Reducer from './reducer'
 import firebase from './firebase'
 import { iState2, iContext, iCategory, iPack, iPackPrice, iPasswordRequest, iAdvert, iLocation, iCountry, iProduct } from './interfaces'
@@ -11,10 +11,12 @@ const Store = (props: any) => {
     countries: [],
     products: [],
     packs: [],
-    packPrices: []
+    packPrices: [],
+    passwordRequests: [],
+    adverts: []
   }
   const [state, dispatch] = React.useReducer(Reducer, initState)
-  useEffect(() => {
+  React.useEffect(() => {
     const startTime = new Date()
     firebase.database().ref('categories').on('value', docs => {
       let categories: iCategory[] = []
@@ -37,7 +39,7 @@ const Store = (props: any) => {
       dispatch({type: 'SET_PACKS', payload: packs})
       dispatch({type: 'SET_PACK_PRICES', payload: packPrices})
     })
-    /*firebase.database().ref('password-requests').on('value', docs => {
+    firebase.database().ref('password-requests').on('value', docs => {
       let passwordRequests: iPasswordRequest[] = []
       docs.forEach(doc => {
         passwordRequests.push({...doc.val(), id:doc.key})
@@ -51,9 +53,9 @@ const Store = (props: any) => {
       })
       dispatch({type: 'SET_ADVERTS', payload: adverts})
     })
-    /*firebase.auth().onAuthStateChanged(user => {
-      dispatch({type: 'LOGIN', payload: user})
+    firebase.auth().onAuthStateChanged(user => {
       if (user){
+        dispatch({type: 'LOGIN', payload: user})
         firebase.database().ref('locations').on('value', docs => {
           let locations: iLocation[] = []
           docs.forEach(doc => {
@@ -77,50 +79,8 @@ const Store = (props: any) => {
         })
       }
     })
-    const unsubscribeCategories = firebase.firestore().collection('categories').onSnapshot(docs => {
-      let categories = []
-      docs.forEach(doc => {
-        categories.push({...doc.data(), id:doc.id})
-      })
-      dispatch({type: 'SET_CATEGORIES', categories})
-    }, err => {
-      unsubscribeCategories()
-    })
-    const unsubscribePacks = firebase.firestore().collection('packs').where('isArchived', '==', false).onSnapshot(docs => {
-      let packs = []
-      let packPrices = []
-      docs.forEach(doc => {
-        packs.push({...doc.data(), id: doc.id})
-        if (doc.data().prices) {
-          doc.data().prices.forEach(p => {
-            packPrices.push({...p, packId: doc.id})
-          })
-        }
-      })
-      dispatch({type: 'SET_PACKS', packs})
-      dispatch({type: 'SET_PACK_PRICES', packPrices})
-    }, err => {
-      unsubscribePacks()
-    })
-    const unsubscribePasswordRequests = firebase.firestore().collection('password-requests').onSnapshot(docs => {
-      let passwordRequests = []
-      docs.forEach(doc => {
-        passwordRequests.push({...doc.data(), id:doc.id})
-      })
-      dispatch({type: 'SET_PASSWORD_REQUESTS', passwordRequests})
-    }, err => {
-      unsubscribePasswordRequests()
-    })
-    const unsubscribeAdverts = firebase.firestore().collection('adverts').onSnapshot(docs => {
-      let adverts = []
-      docs.forEach(doc => {
-        adverts.push({...doc.data(), id:doc.id})
-      })
-      dispatch({type: 'SET_ADVERTS', adverts})
-    }, err => {
-      unsubscribeAdverts()
-    }) 
-    firebase.auth().onAuthStateChanged(user => {
+
+    /*firebase.auth().onAuthStateChanged(user => {
       setUser(user)
       if (user){
         const unsubscribeLocations = firebase.firestore().collection('lookups').doc('l').onSnapshot(doc => {

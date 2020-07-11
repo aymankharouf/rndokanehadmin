@@ -176,16 +176,6 @@ const Reducer = (state: iState2, action: iAction) => {
           ...state,
           returnBasket: undefined
         }  
-      case 'SET_LOCATIONS':
-        return {
-          ...state,
-          locations: action.payload
-        }
-      case 'SET_COUNTRIES':
-        return {
-          ...state,
-          countries: action.payload
-        }
       case 'SET_NOTIFICATIONS':
         return {
           ...state,
@@ -211,11 +201,6 @@ const Reducer = (state: iState2, action: iAction) => {
           ...state,
           stores: action.payload
         }
-      case 'SET_CATEGORIES':
-        return {
-          ...state,
-          categories: action.payload,
-        }
       case 'SET_USERS':
         return {
           ...state,
@@ -236,25 +221,10 @@ const Reducer = (state: iState2, action: iAction) => {
           ...state,
           stockTrans: action.payload
         }
-      case 'SET_PASSWORD_REQUESTS':
-        return {
-          ...state,
-          passwordRequests: action.payload
-        }
-      case 'SET_PRODUCTS':
-        return {
-          ...state,
-          products: action.payload,
-        }
       case 'FINISH_PRODUCTS':
         return {
           ...state,
           productsStatus: 'f'
-        }
-      case 'SET_PACKS':
-        return {
-          ...state,
-          packs: action.payload
         }
       case 'SET_CUSTOMERS':
         return {
@@ -271,11 +241,6 @@ const Reducer = (state: iState2, action: iAction) => {
           ...state,
           monthlyTrans: action.payload
         }
-      case 'SET_PACK_PRICES':
-        return {
-          ...state,
-          packPrices: action.payload,
-        }
       case 'SET_LOGS':
         return {
           ...state,
@@ -285,11 +250,6 @@ const Reducer = (state: iState2, action: iAction) => {
         return {
           ...state,
           archivedOrders: state.archivedOrders?.push(action.payload)
-        }
-      case 'SET_ADVERTS':
-        return {
-          ...state,
-          adverts: action.payload
         }
       case 'ADD_ARCHIVED_PURCHASES':
         return {
@@ -315,6 +275,46 @@ const Reducer = (state: iState2, action: iAction) => {
         return {
           ...state,
           storePayments: action.payload
+        }*/
+      case 'SET_CATEGORIES':
+        return {
+          ...state,
+          categories: action.payload,
+        }
+      case 'SET_PACKS':
+        return {
+          ...state,
+          packs: action.payload
+        }
+      case 'SET_PACK_PRICES':
+        return {
+          ...state,
+          packPrices: action.payload,
+        }
+      case 'SET_PASSWORD_REQUESTS':
+        return {
+          ...state,
+          passwordRequests: action.payload
+        }
+      case 'SET_ADVERTS':
+        return {
+          ...state,
+          adverts: action.payload
+        }
+      case 'SET_LOCATIONS':
+        return {
+          ...state,
+          locations: action.payload
+        }
+      case 'SET_COUNTRIES':
+        return {
+          ...state,
+          countries: action.payload
+        }
+      case 'SET_PRODUCTS':
+        return {
+          ...state,
+          products: action.payload,
         }
       case 'SET_MESSAGE':
         return {
@@ -325,7 +325,7 @@ const Reducer = (state: iState2, action: iAction) => {
         return {
           ...state,
           message: undefined
-        }*/
+        }
       case 'LOGIN':
         return {
           ...state,

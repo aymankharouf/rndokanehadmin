@@ -139,12 +139,16 @@ export interface iState {
 }
 
 export interface iState2 {
+  user?: firebase.User,
   categories: iCategory[],
   countries: iCountry[],
   products: iProduct[],
   packs: iPack[],
   packPrices: iPackPrice[],
-  productsStatus?: string
+  productsStatus?: string,
+  passwordRequests: iPasswordRequest[],
+  message?: string,
+  adverts: iAdvert[],
 }
 
 export interface iAction {
