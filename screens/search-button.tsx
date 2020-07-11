@@ -2,7 +2,7 @@ import React from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { Button } from 'react-native-ui-lib'
 
-const SearchButton = props => {
+const SearchButton = (props: any) => {
   return (
     <Button
       style={{margin: 10}}

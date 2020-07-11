@@ -4,10 +4,10 @@ import { TextField, FloatingButton } from 'react-native-ui-lib'
 import { StoreContext } from '../data/store'
 import labels from '../data/labels'
 import { TouchableWithoutFeedback, Keyboard } from 'react-native'
-import { addCountry, getMessage } from '../data/actions'
+import { addCountry, getMessage } from '../data/actionst'
 import RNToast from './rntoast'
 
-const AddCountry = props => {
+const AddCountry = (props: any) => {
   const { state, dispatch } = useContext(StoreContext)
   const [name, setName] = useState('')
   const [isValid, setIsValid] = useState(false)
@@ -20,10 +20,10 @@ const AddCountry = props => {
         throw new Error('duplicateName')
       }
       addCountry(name)
-      dispatch({type: 'SET_MESSAGE', message: {type: 'm', text: labels.addSuccess}})
+      dispatch({type: 'SET_MESSAGE', payload: {type: 'm', text: labels.addSuccess}})
       props.navigation.goBack()
     } catch(err) {
-      dispatch({type: 'SET_MESSAGE', message: {type: 'e', text: getMessage(props, err)}})
+      dispatch({type: 'SET_MESSAGE', payload: {type: 'e', text: getMessage(props, err)}})
 		}
   }
   return (
@@ -33,7 +33,7 @@ const AddCountry = props => {
           containerStyle={{marginBottom: 1}}
           floatingPlaceholder
           placeholder={labels.name}
-          onChangeText={e => setName(e)}
+          onChangeText={(e: any) => setName(e)}
           floatOnFocus
         />
         <FloatingButton

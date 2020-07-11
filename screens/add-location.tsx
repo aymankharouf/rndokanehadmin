@@ -2,11 +2,12 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Text } from 'react-native'
 
-const AddPack = props => {
+const AddLocation = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Text>Add Pack</Text>
+    <SafeAreaView style={{flex: 1}}>
+      <Text>Add Location</Text>
     </SafeAreaView>
   )
 }
-export default AddPack
+
+export default AddLocation

@@ -9,7 +9,7 @@ import RNDialog from './rndialog'
 import { deleteCountry } from '../data/actions'
 import RNToast from './rntoast'
 
-const Countries = props => {
+const Countries = (props: any) => {
   const { state, dispatch } = useContext(StoreContext)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [selectedId, setSelectedId] = useState('')

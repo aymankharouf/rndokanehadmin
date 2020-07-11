@@ -4,7 +4,7 @@ import labels from '../data/labels'
 import { randomColors } from '../data/config'
 import { Button } from 'react-native-ui-lib'
 
-const Settings = props => {
+const Settings = (props: any) => {
   const [sections] = useState(() => [
     {id: 0, name: labels.countries, path: 'Countries'},
     {id: 1, name: labels.categories, path: 'Categories'},

@@ -3,7 +3,7 @@ import { Colors, Text, Dialog, Button, View } from 'react-native-ui-lib'
 import labels from '../data/labels'
 import { StyleSheet } from 'react-native'
 
-const RNDialog = props => {
+const RNDialog = (props: any) => {
   return (
     <Dialog
       useSafeArea

@@ -1,15 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { StoreContext } from '../data/store'
-import { addProduct, getMessage } from '../data/actions'
+import { addProduct, getMessage } from '../data/actionst'
 import labels from '../data/labels'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Image, ScrollView } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 import RNToast from './rntoast'
 import { TextField, FloatingButton, Picker, Button, Colors } from 'react-native-ui-lib'
-import dropdown from '../assets/drop-down.png';
+import dropdown from '../assets/drop-down.png'
 
-const AddProduct = props => {
+
+const AddProduct = (props: any) => {
   const { state, dispatch } = useContext(StoreContext)
   const [name, setName] = useState('')
   const [alias, setAlias] = useState('')
@@ -17,7 +18,7 @@ const AddProduct = props => {
   const [category, setCategory] = useState('')
   const [trademark, setTrademark] = useState('')
   const [country, setCountry] = useState('')
-  const [imageUri, setImageUri] = useState('')
+  const [imageUri, setImageUri] = useState<any>('')
   const [categories] = useState(() => state.categories.map(c => {
     return {
       value: c.id,
@@ -36,30 +37,31 @@ const AddProduct = props => {
   }, [name])
   const openImagePicker = async () => {
     const pickerResult = await ImagePicker.launchImageLibraryAsync()
-    setImageUri(pickerResult.uri)
+    setImageUri(pickerResult)
   }
   const handleSubmit = () => {
     try{
-      if (state.products.find(p => p.categoryId === category.value && p.country === country.label && p.name === name && p.alias === alias)) {
+      if (state.products.find(p => p.categoryId === category && p.country === country && p.name === name && p.alias === alias)) {
         throw new Error('duplicateProduct')
       }
       const product = {
+        id: '',
         name,
         alias,
         description,
-        categoryId: category.value,
+        categoryId: category,
         trademark,
-        country: country.label,
+        country: country,
         sales: 0,
         rating: 0,
         ratingCount: 0,
         isArchived: false
       }
       addProduct(product, imageUri)
-      dispatch({type: 'SET_MESSAGE', message: {type: 'm', text: labels.addSuccess}})
+      dispatch({type: 'SET_MESSAGE', payload: {type: 'm', text: labels.addSuccess}})
       props.navigation.goBack()
     } catch(err) {
-			dispatch({type: 'SET_MESSAGE', message: {type: 'e', text: getMessage(props, err)}})
+			dispatch({type: 'SET_MESSAGE', payload: {type: 'e', text: getMessage(props, err)}})
 		}
   }
   return (
@@ -68,26 +70,26 @@ const AddProduct = props => {
           <TextField
             floatingPlaceholder
             placeholder={labels.name}
-            onChangeText={e => setName(e)}
+            onChangeText={(e: any) => setName(e)}
             floatOnFocus
           />
           <TextField
             floatingPlaceholder
             placeholder={labels.alias}
-            onChangeText={e => setAlias(e)}
+            onChangeText={(e: any) => setAlias(e)}
             floatOnFocus
           />
           <TextField
             floatingPlaceholder
             placeholder={labels.description}
-            onChangeText={e => setDescription(e)}
+            onChangeText={(e: any) => setDescription(e)}
             floatOnFocus
           />
           <TextField
             containerStyle={{marginBottom: 1}}
             floatingPlaceholder
             placeholder={labels.trademark}
-            onChangeText={e => setTrademark(e)}
+            onChangeText={(e: any) => setTrademark(e)}
             floatOnFocus
           />
           <Picker
@@ -95,12 +97,12 @@ const AddProduct = props => {
             floatingPlaceholder
             value={category}
             enableModalBlur={false}
-            onChange={e => setCategory(e)}
+            onChange={(e: any) => setCategory(e)}
             topBarProps={{title: labels.categories}}
             style={{color: Colors.red20}}
             rightIconSource={dropdown}
             showSearch
-            searchPlaceholder={state.search}
+            searchPlaceholder={labels.search}
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
           >
             {categories.map(c => <Picker.Item key={c.value} value={c}/>)}
@@ -110,12 +112,12 @@ const AddProduct = props => {
             floatingPlaceholder
             value={country}
             enableModalBlur={false}
-            onChange={e => setCountry(e)}
+            onChange={(e: any) => setCountry(e)}
             topBarProps={{title: labels.countries}}
             style={{color: Colors.red20}}
             rightIconSource={dropdown}
             showSearch
-            searchPlaceholder={state.search}
+            searchPlaceholder={labels.search}
             searchStyle={{color: Colors.blue30, placeholderTextColor: Colors.dark50}}
           >
             {countries.map(c => <Picker.Item key={c.value} value={c}/>)}
