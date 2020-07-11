@@ -4,7 +4,7 @@ import { StoreContext } from '../data/store'
 import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet } from 'react-native'
 
-const RNToast = props => {
+const RNToast = () => {
   const { state, dispatch } = useContext(StoreContext)
   return (
     <Toast

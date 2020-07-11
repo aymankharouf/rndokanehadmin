@@ -22,7 +22,7 @@ import AddPack from './screens/add-pack'
 import { Ionicons } from '@expo/vector-icons'
 import { Button } from 'react-native-ui-lib'
 
-const LogoTitle = () => {
+const LogoTitle = (props: any) => {
   return (
     <Image
       style={{width: 130}}
@@ -30,7 +30,7 @@ const LogoTitle = () => {
     />
   )
 }
-const BackButton = props => {
+const BackButton = (props: any) => {
   return (
     <Button
       style={{margin: 10}}
@@ -41,7 +41,7 @@ const BackButton = props => {
     </Button>
   )
 }
-const MenuButton = props => {
+const MenuButton = (props: any) => {
   return (
     <Button
       style={{margin: 10}}
@@ -53,7 +53,7 @@ const MenuButton = props => {
   )
 }
 const HomeStack = createStackNavigator()
-const HomeStackScreen = props => {
+const HomeStackScreen = (props: any) => {
     return (
     <HomeStack.Navigator 
       screenOptions={{...TransitionPresets.SlideFromRightIOS}}
@@ -79,7 +79,7 @@ const HomeStackScreen = props => {
 }
 
 const LoginStack = createStackNavigator()
-const LoginStackScreen = props => {
+const LoginStackScreen = (props: any) => {
   return (
     <LoginStack.Navigator
       screenOptions={{...TransitionPresets.SlideFromRightIOS}}
@@ -98,7 +98,7 @@ const LoginStackScreen = props => {
 }
 
 const SettingsStack = createStackNavigator()
-const SettingsStackScreen = props => {
+const SettingsStackScreen = (props: any) => {
   return (
     <SettingsStack.Navigator
       screenOptions={{...TransitionPresets.SlideFromRightIOS}}

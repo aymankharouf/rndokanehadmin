@@ -7,18 +7,24 @@ import labels from '../data/labels'
 import RNToast from './rntoast'
 import Search from './search'
 import { StoreContext } from '../data/store'
-import { productOfText, getCategoryName } from '../data/actions'
+import { productOfText, getCategoryName } from '../data/actionst'
 import { randomColors } from '../data/config'
 import SearchButton from './search-button'
+import { iProduct } from '../data/interfaces'
+import { FadeInFromBottomAndroidSpec, FadeOutToBottomAndroidSpec } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionSpecs'
 
-const Products = props => {
+interface iAction {
+  label: string,
+  action: () => void
+}
+const Products = (props: any) => {
   const { state } = useContext(StoreContext)
   const [actionsVisible, setActionsVisible] = useState(false)
   const [searchVisible, setSearchVisible] = useState(false)
   const [search, setSearch] = useState('')
   const [category] = useState(() => state.categories.find(c => c.id === props.route.params?.id))
-  const [products, setProducts] = useState([])
-  const [shownProducts, setShownProducts] = useState([])
+  const [products, setProducts] = useState<iProduct[]>([])
+  const [shownProducts, setShownProducts] = useState<iProduct[]>([])
   const [showAllVisible, setShowAllVisible] = useState(false)
   const [actions] = useState(() => [
     {label: labels.add, action: () => props.navigation.navigate('AddProduct')},
@@ -33,7 +39,7 @@ const Products = props => {
           categoryInfo
         }
       })
-      return products.sort((p1, p2) => p1.categoryId === p2.categoryId ? (p1.name > p2.name ? 1 : -1) : (p1.categoryInfo.name > p2.categoryInfo.name ? 1 : -1))
+      return products.sort((p1, p2) => p1.categoryId === p2.categoryId ? (p1.name > p2.name ? 1 : -1) : ((p1.categoryInfo?.name || '') > (p2.categoryInfo?.name || '') ? 1 : -1))
     })
   }, [state.products, state.categories, state.packs, props.route.params?.id])
   useEffect(() => 
@@ -53,37 +59,32 @@ const Products = props => {
       setShowAllVisible(false)
     }
   }, [search, products])
-  const renderItem = item => {
-    const animationProps = AnimatableManager.presets.fadeInRight;
-    const imageAnimationProps = AnimatableManager.getRandomDelay();
+  const renderItem = (item: iProduct) => {
+    //const animationProps = AnimatableManager.presets.fadeInRight;
+    //const imageAnimationProps = AnimatableManager.getRandomDelay();
     return (
-      <Animatable.View {...animationProps}>
+      //<Animatable.View animation={FadeInFromBottomAndroidSpec}>
         <ListItem
-          activeBackgroundColor={Colors.dark60}
-          activeOpacity={0.3}
+          //activeBackgroundColor={Colors.dark60}
+          //activeOpacity={0.3}
           height={80}
           containerStyle={styles.border}
-          style={{alignItems: 'center'}}
+          //style={{alignItems: 'center'}}
           onPress={() => props.navigation.navigate('ProductPacks', {id: item.id})}
         >
           <ListItem.Part>
-            <Animatable.Image
-              source={{uri: item.imageUrl}}
-              style={styles.image}
-              {...imageAnimationProps}
-            />
           </ListItem.Part>
-          <ListItem.Part style={{flexDirection: 'column'}}>
+          <ListItem.Part containerStyle={{flexDirection: 'column'}}>
             <Text style={{fontSize: 14}}>{item.name}</Text>
             {item.alias ? <Text style={{fontSize: 12, color: 'red'}}>{item.alias}</Text> : null}
-            <Text style={{fontSize: 12, color: 'blue'}}>{getCategoryName(item.categoryInfo, state.categories)}</Text>
+            <Text style={{fontSize: 12, color: 'blue'}}>{getCategoryName(item.categoryInfo)}</Text>
             <Text style={{fontSize: 12, color: 'green'}}>{productOfText(item.trademark, item.country)}</Text>
           </ListItem.Part>
         </ListItem>
-      </Animatable.View>
+      //</Animatable.View>
     )
   }
-  const handleAction = actionType => {
+  const handleAction = (actionType: iAction) => {
     setActionsVisible(false)
     actionType.action()
   }
@@ -91,7 +92,7 @@ const Products = props => {
   if (!state.productsStatus) return <LoaderScreen color={Colors.blue30} overlay />
   return (
     <SafeAreaView style={{flex: 1}}>
-      {showAllVisible ? <View style={{alignItems: 'center'}}><Button outline size={Button.sizes.xSmall} style={{width: '50%', marginBottom: 5}} label={labels.showAll} onPress={() => setSearch('')} /></View>: null}
+      {showAllVisible ? <View style={{alignItems: 'center'}}><Button outline size="xSmall" style={{width: '50%', marginBottom: 5}} label={labels.showAll} onPress={() => setSearch('')} /></View>: null}
       {products.length === 0 ?
         <Text>{labels.noData}</Text>
       : <FlatList 

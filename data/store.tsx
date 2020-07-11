@@ -1,112 +1,83 @@
-import React, { createContext, useReducer, useEffect, useState } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import Reducer from './reducer'
 import firebase from './firebase'
+import { iState2, iContext, iCategory, iPack, iPackPrice, iPasswordRequest, iAdvert, iLocation, iCountry, iProduct } from './interfaces'
 
-export const StoreContext = createContext()
+export const StoreContext = React.createContext({} as iContext)
 
-const Store = props => {
-  const [user, setUser] = useState(null)
-  const initState = {
-    categories: [], 
-    locations: [], 
+const Store = (props: any) => {
+  const initState: iState2 = {
+    categories: [],
     countries: [],
-    stores: [], 
-    basket: '', 
-    users: [],
-    purchases: [],
-    orders: [],
-    stockTrans: [],
     products: [],
     packs: [],
-    passwordRequests: [],
-    customers: [],
-    spendings: [],
-    monthlyTrans: [],
-    packPrices: [],
-    logs: [],
-    archivedOrders: [],
-    adverts: [],
-    archivedPurchases: [],
-    archivedStockTrans: [],
-    archivedProducts: [],
-    archivedPacks: [],
-    notifications: [],
-    alarms: [],
-    ratings: [],
-    invitations: [],
-    storePayments: [],
-    message: '',
-    categoriesStatus: '',
-    productsStatus: ''
+    packPrices: []
   }
-  const [state, dispatch] = useReducer(Reducer, initState)
+  const [state, dispatch] = React.useReducer(Reducer, initState)
   useEffect(() => {
     const startTime = new Date()
     firebase.database().ref('categories').on('value', docs => {
-      let categories = []
+      let categories: iCategory[] = []
       docs.forEach(doc => {
         categories.push({...doc.val(), id:doc.key})
       })
-      dispatch({type: 'SET_CATEGORIES', categories})
-      dispatch({type: 'FINISH_CATEGORIES'})
+      dispatch({type: 'SET_CATEGORIES', payload: categories})
     })
     firebase.database().ref('packs').on('value', docs => {
-      let packs = []
-      let packPrices = []
+      let packs: iPack[] = []
+      let packPrices: iPackPrice[] = []
       docs.forEach(doc => {
         packs.push({...doc.val(), id: doc.key})
         if (doc.val().prices) {
-          doc.val().prices.forEach(p => {
+          doc.val().prices.forEach((p: iPackPrice) => {
             packPrices.push({...p, packId: doc.key})
           })
         }
       })
-      dispatch({type: 'SET_PACKS', packs})
-      dispatch({type: 'SET_PACK_PRICES', packPrices})
-      console.log('finish packs')
+      dispatch({type: 'SET_PACKS', payload: packs})
+      dispatch({type: 'SET_PACK_PRICES', payload: packPrices})
     })
-    firebase.database().ref('password-requests').on('value', docs => {
-      let passwordRequests = []
+    /*firebase.database().ref('password-requests').on('value', docs => {
+      let passwordRequests: iPasswordRequest[] = []
       docs.forEach(doc => {
         passwordRequests.push({...doc.val(), id:doc.key})
       })
-      dispatch({type: 'SET_PASSWORD_REQUESTS', passwordRequests})
+      dispatch({type: 'SET_PASSWORD_REQUESTS', payload: passwordRequests})
     })
     firebase.database().ref('adverts').on('value', docs => {
-      let adverts = []
+      let adverts: iAdvert[] = []
       docs.forEach(doc => {
         adverts.push({...doc.val(), id:doc.key})
       })
-      dispatch({type: 'SET_ADVERTS', adverts})
+      dispatch({type: 'SET_ADVERTS', payload: adverts})
     })
-    firebase.auth().onAuthStateChanged(user => {
-      setUser(user)
+    /*firebase.auth().onAuthStateChanged(user => {
+      dispatch({type: 'LOGIN', payload: user})
       if (user){
         firebase.database().ref('locations').on('value', docs => {
-          let locations = []
+          let locations: iLocation[] = []
           docs.forEach(doc => {
             locations.push({...doc.val(), id:doc.key})
           })
-          dispatch({type: 'SET_LOCATIONS', locations})
+          dispatch({type: 'SET_LOCATIONS', payload: locations})
         })
         firebase.database().ref('countries').on('value', docs => {
-          let countries = []
+          let countries: iCountry[] = []
           docs.forEach(doc => {
             countries.push({...doc.val(), id:doc.key})
           })
-          dispatch({type: 'SET_COUNTRIES', countries})
+          dispatch({type: 'SET_COUNTRIES', payload: countries})
         })
         firebase.database().ref('products').on('value', docs => {
-          let products = []
+          let products: iProduct[] = []
           docs.forEach(doc => {
             products.push({...doc.val(), id:doc.key})
           })
-          dispatch({type: 'SET_PRODUCTS', products})
-          dispatch({type: 'FINISH_PRODUCTS'})
+          dispatch({type: 'SET_PRODUCTS', payload: products})
         })
       }
     })
-    /*const unsubscribeCategories = firebase.firestore().collection('categories').onSnapshot(docs => {
+    const unsubscribeCategories = firebase.firestore().collection('categories').onSnapshot(docs => {
       let categories = []
       docs.forEach(doc => {
         categories.push({...doc.data(), id:doc.id})
@@ -291,7 +262,7 @@ const Store = props => {
     })*/
   }, [])
   return (
-    <StoreContext.Provider value={{state, user, dispatch}}>
+    <StoreContext.Provider value={{state, dispatch}}>
       {props.children}
     </StoreContext.Provider>
   )

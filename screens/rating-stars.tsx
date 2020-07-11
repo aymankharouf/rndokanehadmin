@@ -2,10 +2,14 @@ import React, { useState } from 'react'
 import { Text, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
-const RatingStars = props => {
+interface iProps {
+  rating: number,
+  count: number
+}
+const RatingStars = (props: iProps) => {
   const [stars] = useState(() => {
     const rating_round = Math.round(props.rating / .5 ) * .5
-    const rating_int = parseInt(rating_round)
+    const rating_int = Math.trunc(rating_round)
     const rating_fraction = rating_round - rating_int
     let color
     switch(rating_int){
@@ -33,10 +37,10 @@ const RatingStars = props => {
       stars.unshift(<Ionicons key={i} name="md-star-outline" style={{fontSize: 24, color}} />)
     }
     return stars
-  }, [props.rating])
+  })
   return(
     <View style={{flexDirection: 'row'}}>
-      <Text>{Number(props.count) > 0 ? '(' + props.count + ')' : null}</Text>{stars}
+      <Text>{props.count > 0 ? '(' + props.count + ')' : null}</Text>{stars}
     </View>
   )
 }

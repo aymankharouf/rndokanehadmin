@@ -6,14 +6,20 @@ import labels from '../data/labels'
 import RatingStars from './rating-stars'
 import { FlatList, Alert, StyleSheet } from 'react-native'
 import { randomColors } from '../data/config'
+import { iPack } from '../data/interfaces'
+import { deleteProduct } from '../data/actionst'
 
-const ProductPacks = props => {
-  const { state } = useContext(StoreContext)
+interface iAction {
+  label: string,
+  action: () => void
+}
+const ProductPacks = (props: any) => {
+  const { state, dispatch } = useContext(StoreContext)
   const [product] = useState(() => state.products.find(p => p.id === props.route.params.id))
-  const [packs, setPacks] = useState([])
-  const [activePacks, setActivePacks] = useState([])
+  const [packs, setPacks] = useState<iPack[]>([])
+  const [activePacks, setActivePacks] = useState<iPack[]>([])
   const [actionsVisible, setActionsVisible] = useState(false)
-  const [actions, setActions] = useState([])
+  const [actions, setActions] = useState<iAction[]>([])
   useEffect(() => {
     setPacks(() => {
       const packs = state.packs.filter(p => p.productId === props.route.params.id)
@@ -49,9 +55,11 @@ const ProductPacks = props => {
       labels.deleteConfirmation,
       [
         {text: labels.yes, onPress: () => {
-          deleteProduct(product)
-          showMessage(labels.deleteSuccess)
-          props.navigation.goBack()
+          if (product) {
+            deleteProduct(product)
+            dispatch({type: 'SET_MESSAGE', payload: {type: 'm', text: labels.deleteSuccess}})
+            props.navigation.goBack()
+          }
         }},
         {text: labels.cancel, style: 'cancel'},
       ],
@@ -61,11 +69,11 @@ const ProductPacks = props => {
   const handleArchive = () => {
     console.log('archive')
   }
-  const renderItem = item => {
+  const renderItem = (item: iPack) => {
     return (
       <ListItem
-        activeBackgroundColor={Colors.dark60}
-        activeOpacity={0.3}
+        //activeBackgroundColor={Colors.dark60} todo
+        //activeOpacity={0.3}
         containerStyle={styles.border}
         onPress={() => props.navigation.navigate('PackDetails', {id: item.id})}
       >
@@ -75,7 +83,7 @@ const ProductPacks = props => {
       </ListItem>
     )
   }
-  const handleAction = actionType => {
+  const handleAction = (actionType: any) => {
     setActionsVisible(false)
     actionType.action()
   }
@@ -83,17 +91,17 @@ const ProductPacks = props => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Card style={{marginHorizontal: 10}}>
-        <Card.Image height={250} imageSource={{uri: product.imageUrl}} />
+        <Card.Image height={250} source={{uri: product?.imageUrl}} />
         <View padding-20>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{fontSize: 20}}>
-              {`${product.name}${product.alias ? '-' + product.alias : ''}`}
+              {`${product?.name}${product?.alias ? '-' + product.alias : ''}`}
             </Text>
-            <RatingStars rating={product.rating} count={product.ratingCount} />
+            <RatingStars rating={product?.rating ?? 0} count={product?.ratingCount ?? 0} />
           </View>
           <View>
             <Text style={{fontSize: 16}}>
-              {product.description}
+              {product?.description}
             </Text>
           </View>
         </View>

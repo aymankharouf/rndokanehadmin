@@ -2,12 +2,12 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Text } from 'react-native'
 
-const Locations = props => {
+const PasswordRequest = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Text>Locations</Text>
+    <SafeAreaView style={{flex: 1}}>
+      <Text>PasswordRequest</Text>
     </SafeAreaView>
   )
 }
 
-export default Locations
+export default PasswordRequest
