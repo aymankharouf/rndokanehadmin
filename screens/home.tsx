@@ -4,7 +4,7 @@ import { Button } from 'react-native-ui-lib'
 import labels from '../data/labels'
 import { randomColors } from '../data/config'
 
-const Home = props => {
+const Home = (props: any) => {
   const [mainPages] = useState(() => [
     {name: labels.orders, path: 'Orders'},
     {name: labels.stores, path: 'Stores'},

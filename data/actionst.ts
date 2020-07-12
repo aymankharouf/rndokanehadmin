@@ -21,6 +21,10 @@ export const getMessage = (screen: string, error: iError) => {
     countryRef.set({name})
   }
 
+  export const deleteCountry = (id: string) => {
+    firebase.database().ref('countries/' + id).remove()
+  }
+  
   export const addProduct = async (product: iProduct, imageUri: string) => {
     let imageUrl = ''
     if (imageUri) {
@@ -58,4 +62,11 @@ export const getMessage = (screen: string, error: iError) => {
     // }
     return category?.name || ''
   }
+
+  export const login = (email: string, password: string) => {
+    return firebase.auth().signInWithEmailAndPassword(email, password)
+  }
   
+  export const logout = () => {
+    firebase.auth().signOut()
+  }

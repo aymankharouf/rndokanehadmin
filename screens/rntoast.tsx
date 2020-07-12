@@ -15,8 +15,8 @@ const RNToast = () => {
       onDismiss={() => dispatch({type: 'CLEAR_MESSAGE'})}
     >
       <View style={styles.view}>
-        <Text style={styles.text}>{state.message.text}</Text>
-        <Ionicons name={state.message.type === 'e' ? 'md-close' : 'md-checkmark'} style={{...styles.text, fontSize: 30}} />
+        <Text style={styles.text}>{state.message?.text}</Text>
+        <Ionicons name={state.message?.type === 'e' ? 'md-close' : 'md-checkmark'} style={{...styles.text, fontSize: 30}} />
       </View>
     </Toast>
   )

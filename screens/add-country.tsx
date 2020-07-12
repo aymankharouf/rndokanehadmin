@@ -23,7 +23,7 @@ const AddCountry = (props: any) => {
       dispatch({type: 'SET_MESSAGE', payload: {type: 'm', text: labels.addSuccess}})
       props.navigation.goBack()
     } catch(err) {
-      dispatch({type: 'SET_MESSAGE', payload: {type: 'e', text: getMessage(props, err)}})
+      dispatch({type: 'SET_MESSAGE', payload: {type: 'e', text: getMessage(props.route.name, err)}})
 		}
   }
   return (
@@ -33,7 +33,7 @@ const AddCountry = (props: any) => {
           containerStyle={{marginBottom: 1}}
           floatingPlaceholder
           placeholder={labels.name}
-          onChangeText={(e: any) => setName(e)}
+          onChangeText={(e: string) => setName(e)}
           floatOnFocus
         />
         <FloatingButton

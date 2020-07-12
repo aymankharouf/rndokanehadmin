@@ -176,76 +176,6 @@ const Reducer = (state: iState2, action: iAction) => {
           ...state,
           returnBasket: undefined
         }  
-      case 'SET_NOTIFICATIONS':
-        return {
-          ...state,
-          notifications: action.payload
-        }
-      case 'SET_ALARMS':
-        return {
-          ...state,
-          alarms: action.payload
-        }
-      case 'SET_RATINGS':
-        return {
-          ...state,
-          ratings: action.payload
-        }
-      case 'SET_INVITATIONS':
-        return {
-          ...state,
-          invitations: action.payload
-        }
-      case 'SET_STORES':
-        return {
-          ...state,
-          stores: action.payload
-        }
-      case 'SET_USERS':
-        return {
-          ...state,
-          users: action.payload
-        }
-      case 'SET_PURCHASES':
-        return {
-          ...state,
-          purchases: action.payload
-        }
-      case 'SET_ORDERS':
-        return {
-          ...state,
-          orders: action.payload
-        }
-      case 'SET_STOCK_TRANS':
-        return {
-          ...state,
-          stockTrans: action.payload
-        }
-      case 'FINISH_PRODUCTS':
-        return {
-          ...state,
-          productsStatus: 'f'
-        }
-      case 'SET_CUSTOMERS':
-        return {
-          ...state,
-          customers: action.payload
-        }
-      case 'SET_SPENDINGS':
-        return {
-          ...state,
-          spendings: action.payload
-        }
-      case 'SET_MONTHLY_TRANS':
-        return {
-          ...state,
-          monthlyTrans: action.payload
-        }
-      case 'SET_LOGS':
-        return {
-          ...state,
-          logs: action.payload
-        }
       case 'ADD_ARCHIVED_ORDERS':
         return {
           ...state,
@@ -270,11 +200,6 @@ const Reducer = (state: iState2, action: iAction) => {
         return {
           ...state,
           archivedPacks: action.payload
-        }
-      case 'SET_STORE_PAYMENTS':
-        return {
-          ...state,
-          storePayments: action.payload
         }*/
       case 'SET_CATEGORIES':
         return {
@@ -316,6 +241,76 @@ const Reducer = (state: iState2, action: iAction) => {
           ...state,
           products: action.payload,
         }
+      case 'SET_ORDERS':
+        return {
+          ...state,
+          orders: action.payload
+        }
+      case 'SET_USERS':
+        return {
+          ...state,
+          users: action.payload
+        }
+      case 'SET_NOTIFICATIONS':
+        return {
+          ...state,
+          notifications: action.payload
+        }
+      case 'SET_ALARMS':
+        return {
+          ...state,
+          alarms: action.payload
+        }
+      case 'SET_RATINGS':
+        return {
+          ...state,
+          ratings: action.payload
+        }
+      case 'SET_INVITATIONS':
+        return {
+          ...state,
+          invitations: action.payload
+        }
+      case 'SET_CUSTOMERS':
+        return {
+          ...state,
+          customers: action.payload
+        }
+      case 'SET_STORES':
+        return {
+          ...state,
+          stores: action.payload
+        }
+      case 'SET_STORE_PAYMENTS':
+        return {
+          ...state,
+          storePayments: action.payload
+        }
+      case 'SET_PURCHASES':
+        return {
+          ...state,
+          purchases: action.payload
+        }
+      case 'SET_STOCK_TRANS':
+        return {
+          ...state,
+          stockTrans: action.payload
+        }
+      case 'SET_SPENDINGS':
+        return {
+          ...state,
+          spendings: action.payload
+        }
+      case 'SET_MONTHLY_TRANS':
+        return {
+          ...state,
+          monthlyTrans: action.payload
+        }
+      case 'SET_LOGS':
+        return {
+          ...state,
+          logs: action.payload
+        }
       case 'SET_MESSAGE':
         return {
           ...state,
@@ -330,6 +325,11 @@ const Reducer = (state: iState2, action: iAction) => {
         return {
           ...state,
           user: action.payload
+        }
+      case 'LOGOUT':
+        return {
+          ...state,
+          user: undefined
         }
       default:
         return state

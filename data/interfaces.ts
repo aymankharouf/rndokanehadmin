@@ -102,6 +102,10 @@ export interface iInvitation {
 export interface iStorePayment {
 
 }
+export interface iMessage {
+  type: string,
+  text: string
+}
 export interface iState {
   categories: iCategory[],
   locations: iLocation[],
@@ -133,7 +137,7 @@ export interface iState {
   ratings: iRating[],
   invitations: iInvitation[],
   storePayments: iStorePayment[],
-  message?: string,
+  message?: iMessage,
   categoriesStatus?: string,
   productsStatus?: string
 }
@@ -147,8 +151,22 @@ export interface iState2 {
   packPrices: iPackPrice[],
   productsStatus?: string,
   passwordRequests: iPasswordRequest[],
-  message?: string,
+  message?: iMessage,
   adverts: iAdvert[],
+  orders: iOrder[],
+  users: iUser[],
+  notifications: iNotification[],
+  alarms: iAlarm[],
+  ratings: iRating[],
+  invitations: iInvitation[],
+  customers: iCustomer[],
+  stores: iStore[],
+  storePayments: iStorePayment[],
+  purchases: iPurchase[],
+  stockTrans: iStockTrans[],
+  spendings: iSpending[],
+  monthlyTrans: iMonthlyTrans[],
+  logs: iLog[]
 }
 
 export interface iAction {

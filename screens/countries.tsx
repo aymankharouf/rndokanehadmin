@@ -6,17 +6,17 @@ import { FlatList, StyleSheet } from 'react-native'
 import labels from '../data/labels'
 import { Ionicons } from '@expo/vector-icons'
 import RNDialog from './rndialog'
-import { deleteCountry } from '../data/actions'
+import { deleteCountry } from '../data/actionst'
 import RNToast from './rntoast'
+import { iCountry } from '../data/interfaces'
 
 const Countries = (props: any) => {
   const { state, dispatch } = useContext(StoreContext)
   const [dialogVisible, setDialogVisible] = useState(false)
   const [selectedId, setSelectedId] = useState('')
-  const renderItem = ({ item }) => {
+  const renderItem = (item: iCountry) => {
     return (
       <ListItem
-        style={{justifyContent: 'space-between', paddingHorizontal: 10, backgroundColor: item.id === selectedId ? Colors.dark60 : null}}
         containerStyle={styles.border}
       >
         <ListItem.Part>
@@ -34,13 +34,13 @@ const Countries = (props: any) => {
       </ListItem>
     )
   }
-  const showDialog = id => {
+  const showDialog = (id: string) => {
     setSelectedId(id)
     setDialogVisible(true)
   }
   const handleOK = () => {
     deleteCountry(selectedId)
-    dispatch({type: 'SET_MESSAGE', message: {type: 'm', text: labels.deleteSuccess}})
+    dispatch({type: 'SET_MESSAGE', payload: {type: 'm', text: labels.deleteSuccess}})
     setDialogVisible(false)
   }
   const dismissDialog = () => {
@@ -53,7 +53,7 @@ const Countries = (props: any) => {
         <Text>{labels.noData}</Text>
       : <FlatList 
           data={state.countries} 
-          renderItem={renderItem} 
+          renderItem={({ item }) => renderItem(item)} 
           keyExtractor={item => item.id}
         />
       }
@@ -73,7 +73,10 @@ const Countries = (props: any) => {
 const styles = StyleSheet.create({
   border: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: ThemeManager.dividerColor
+    borderColor: ThemeManager.dividerColor,
+    justifyContent: 'space-between', 
+    paddingHorizontal: 10, 
+    backgroundColor: Colors.dark60
   }
 })
 

@@ -19,8 +19,11 @@ import AddProduct from './screens/add-product'
 import ProductPacks from './screens/product-packs'
 import ProductDetails from './screens/product-details'
 import AddPack from './screens/add-pack'
+import Logout from './screens/logout'
 import { Ionicons } from '@expo/vector-icons'
 import { Button } from 'react-native-ui-lib'
+import { StoreContext } from './data/store'
+import { logout } from './data/actionst'
 
 const LogoTitle = (props: any) => {
   return (
@@ -121,6 +124,7 @@ const SettingsStackScreen = (props: any) => {
 
 const Drawer = createDrawerNavigator()
 const Navigator = () => {
+  const { state } = React.useContext(StoreContext)
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
@@ -131,20 +135,31 @@ const Navigator = () => {
             title: labels.home,
           }}
         />
-        <Drawer.Screen 
-          name="Login"
-          component={LoginStackScreen}
-          options={{
-            title: labels.login,
-          }}
-        />
-        <Drawer.Screen 
-          name="Settings"
-          component={SettingsStackScreen}
-          options={{
-            title: labels.settings,
-          }}
-        />
+        {state.user ? 
+          <Drawer.Screen 
+            name="Logout"
+            component={Logout}
+            options={{
+              title: labels.logout,
+            }}
+          />
+        : <Drawer.Screen 
+            name="Login"
+            component={LoginStackScreen}
+            options={{
+              title: labels.login,
+            }}
+          />
+        }
+        {state.user && 
+          <Drawer.Screen 
+            name="Settings"
+            component={SettingsStackScreen}
+            options={{
+              title: labels.settings,
+            }}
+          />
+        }
       </Drawer.Navigator>
     </NavigationContainer>
 

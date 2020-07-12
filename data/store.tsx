@@ -1,7 +1,7 @@
 import React from 'react'
 import Reducer from './reducer'
 import firebase from './firebase'
-import { iState2, iContext, iCategory, iPack, iPackPrice, iPasswordRequest, iAdvert, iLocation, iCountry, iProduct } from './interfaces'
+import { iState2, iContext, iCategory, iPack, iPackPrice, iPasswordRequest, iAdvert, iLocation, iCountry, iProduct, iOrder, iUser, iNotification, iAlarm, iRating, iInvitation, iCustomer, iStore, iStorePayment, iPurchase, iStockTrans, iSpending, iMonthlyTrans, iLog } from './interfaces'
 
 export const StoreContext = React.createContext({} as iContext)
 
@@ -13,7 +13,21 @@ const Store = (props: any) => {
     packs: [],
     packPrices: [],
     passwordRequests: [],
-    adverts: []
+    adverts: [],
+    orders: [],
+    users: [],
+    notifications: [],
+    alarms: [],
+    ratings: [],
+    invitations: [],
+    customers: [],
+    stores: [],
+    storePayments: [],
+    purchases: [],
+    stockTrans: [],
+    spendings: [],
+    monthlyTrans: [],
+    logs: []
   }
   const [state, dispatch] = React.useReducer(Reducer, initState)
   React.useEffect(() => {
@@ -27,16 +41,16 @@ const Store = (props: any) => {
     })
     firebase.database().ref('packs').on('value', docs => {
       let packs: iPack[] = []
-      let packPrices: iPackPrice[] = []
       docs.forEach(doc => {
-        packs.push({...doc.val(), id: doc.key})
-        if (doc.val().prices) {
-          doc.val().prices.forEach((p: iPackPrice) => {
-            packPrices.push({...p, packId: doc.key})
-          })
-        }
+        packs.push({...doc.val(), id:doc.key})
       })
       dispatch({type: 'SET_PACKS', payload: packs})
+    })
+    firebase.database().ref('pack-prices').on('value', docs => {
+      let packPrices: iPackPrice[] = []
+      docs.forEach(doc => {
+        packPrices.push({...doc.val(), id:doc.key})
+      })
       dispatch({type: 'SET_PACK_PRICES', payload: packPrices})
     })
     firebase.database().ref('password-requests').on('value', docs => {
@@ -77,149 +91,108 @@ const Store = (props: any) => {
           })
           dispatch({type: 'SET_PRODUCTS', payload: products})
         })
+        firebase.database().ref('orders').on('value', docs => {
+          let orders: iOrder[] = []
+          docs.forEach(doc => {
+            orders.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_ORDERS', payload: orders})
+        })
+        firebase.database().ref('users').on('value', docs => {
+          let users: iUser[] = []
+          docs.forEach(doc => {
+            users.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_USERS', payload: users})
+        })
+        firebase.database().ref('notifications').on('value', docs => {
+          let notifications: iNotification[] = []
+          docs.forEach(doc => {
+            notifications.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_NOTIFICATIONS', payload: notifications})
+        })
+        firebase.database().ref('alarms').on('value', docs => {
+          let alarms: iAlarm[] = []
+          docs.forEach(doc => {
+            alarms.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_ALARMS', payload: alarms})
+        })
+        firebase.database().ref('ratings').on('value', docs => {
+          let ratings: iRating[] = []
+          docs.forEach(doc => {
+            ratings.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_RATINGS', payload: ratings})
+        })
+        firebase.database().ref('invitations').on('value', docs => {
+          let invitations: iInvitation[] = []
+          docs.forEach(doc => {
+            invitations.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_INVITATIONS', payload: invitations})
+        })
+        firebase.database().ref('customers').on('value', docs => {
+          let customers: iCustomer[] = []
+          docs.forEach(doc => {
+            customers.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_CUSTOMERS', payload: customers})
+        })
+        firebase.database().ref('stores').on('value', docs => {
+          let stores: iStore[] = []
+          docs.forEach(doc => {
+            stores.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_STORES', payload: stores})
+        })
+        firebase.database().ref('store-payments').on('value', docs => {
+          let storePayments: iStorePayment[] = []
+          docs.forEach(doc => {
+            storePayments.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_STORE_PAYMENTS', payload: storePayments})
+        })
+        firebase.database().ref('purchases').on('value', docs => {
+          let purchases: iPurchase[] = []
+          docs.forEach(doc => {
+            purchases.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_PURCHASES', payload: purchases})
+        })
+        firebase.database().ref('stock-trans').on('value', docs => {
+          let stockTrans: iStockTrans[] = []
+          docs.forEach(doc => {
+            stockTrans.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_STOCK_TRANS', payload: stockTrans})
+        })
+        firebase.database().ref('spendings').on('value', docs => {
+          let spendings: iSpending[] = []
+          docs.forEach(doc => {
+            spendings.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_SPENDINGS', payload: spendings})
+        })
+        firebase.database().ref('monthly-trans').on('value', docs => {
+          let monthlyTrans: iMonthlyTrans[] = []
+          docs.forEach(doc => {
+            monthlyTrans.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_MONTHLY_TRANS', payload: monthlyTrans})
+        })
+        firebase.database().ref('logs').on('value', docs => {
+          let logs: iLog[] = []
+          docs.forEach(doc => {
+            logs.push({...doc.val(), id:doc.key})
+          })
+          dispatch({type: 'SET_LOGS', payload: logs})
+        })
+      } else {
+        dispatch({type: 'LOGOUT'})
       }
     })
-
-    /*firebase.auth().onAuthStateChanged(user => {
-      setUser(user)
-      if (user){
-        const unsubscribeLocations = firebase.firestore().collection('lookups').doc('l').onSnapshot(doc => {
-          dispatch({type: 'SET_LOCATIONS', locations: doc.data().values})
-        }, err => {
-          unsubscribeLocations()
-        })  
-        const unsubscribeCountries = firebase.firestore().collection('lookups').doc('c').onSnapshot(doc => {
-          dispatch({type: 'SET_COUNTRIES', countries: doc.data().values})
-        }, err => {
-          unsubscribeCountries()
-        })
-        const unsubscribeProducts = firebase.firestore().collection('products').where('isArchived', '==', false).onSnapshot(docs => {
-          let products = []
-          docs.forEach(doc => {
-            products.push({...doc.data(), id: doc.id})
-          })
-          dispatch({type: 'SET_PRODUCTS', products})
-        }, err => {
-          unsubscribeProducts()
-        })    
-        const unsubscribeOrders = firebase.firestore().collection('orders').where('isArchived', '==', false).onSnapshot(docs => {
-          let orders = []
-          docs.forEach(doc => {
-            orders.push({...doc.data(), id:doc.id})
-          })
-          dispatch({type: 'SET_ORDERS', orders})
-        }, err => {
-          unsubscribeOrders()
-        })  
-        const unsubscribeUsers = firebase.firestore().collection('users').onSnapshot(docs => {
-          let users = []
-          let notifications = []
-          let alarms = []
-          let ratings = []
-          let invitations = []
-          docs.forEach(doc => {
-            users.push({...doc.data(), id:doc.id})
-            if (doc.data().notifications) {
-              doc.data().notifications.forEach(n => {
-                notifications.push({...n, userId: doc.id})
-              })
-            }
-            if (doc.data().alarms) {
-              doc.data().alarms.forEach(a => {
-                alarms.push({...a, userId: doc.id})
-              })
-            }
-            if (doc.data().ratings) {
-              doc.data().ratings.forEach(r => {
-                ratings.push({...r, userId: doc.id})
-              })
-            }
-            if (doc.data().friends) {
-              doc.data().friends.forEach(f => {
-                invitations.push({...f, userId: doc.id})
-              })
-            }
-          })
-          dispatch({type: 'SET_USERS', users})
-          dispatch({type: 'SET_NOTIFICATIONS', notifications})
-          dispatch({type: 'SET_ALARMS', alarms})
-          dispatch({type: 'SET_RATINGS', ratings})
-          dispatch({type: 'SET_INVITATIONS', invitations})
-        }, err => {
-          unsubscribeUsers()
-        })  
-        const unsubscribeCustomers = firebase.firestore().collection('customers').onSnapshot(docs => {
-          let customers = []
-          docs.forEach(doc => {
-            customers.push({...doc.data(), id:doc.id})
-          })
-          dispatch({type: 'SET_CUSTOMERS', customers})
-        }, err => {
-          unsubscribeCustomers()
-        })  
-        const unsubscribeStores = firebase.firestore().collection('stores').onSnapshot(docs => {
-          let stores = []
-          let storePayments = []
-          docs.forEach(doc => {
-            stores.push({...doc.data(), id:doc.id})
-            if (doc.data().payments) {
-              doc.data().payments.forEach(p => {
-                storePayments.push({...p, storeId: doc.id, storeInfo: doc.data()})
-              })
-            }
-          })
-          dispatch({type: 'SET_STORES', stores})
-          dispatch({type: 'SET_STORE_PAYMENTS', storePayments})
-        }, err => {
-          unsubscribeStores()
-        })  
-        const unsubscribePurchases = firebase.firestore().collection('purchases').where('isArchived', '==', false).onSnapshot(docs => {
-          let purchases = []
-          docs.forEach(doc => {
-            purchases.push({...doc.data(), id:doc.id})
-          })
-          dispatch({type: 'SET_PURCHASES', purchases})
-        }, err => {
-          unsubscribePurchases()
-        })  
-        const unsubscribeStockTrans = firebase.firestore().collection('stock-trans').where('isArchived', '==', false).onSnapshot(docs => {
-          let stockTrans = []
-          docs.forEach(doc => {
-            stockTrans.push({...doc.data(), id:doc.id})
-          })
-          dispatch({type: 'SET_STOCK_TRANS', stockTrans})
-        }, err => {
-          unsubscribeStockTrans()
-        })  
-        const unsubscribeSpendings = firebase.firestore().collection('spendings').onSnapshot(docs => {
-          let spendings = []
-          docs.forEach(doc => {
-            spendings.push({...doc.data(), id:doc.id})
-          })
-          dispatch({type: 'SET_SPENDINGS', spendings})
-        }, err => {
-          unsubscribeSpendings()
-        })  
-        const unsubscribeMonthlyTrans = firebase.firestore().collection('monthly-trans').onSnapshot(docs => {
-          let monthlyTrans = []
-          docs.forEach(doc => {
-            monthlyTrans.push({...doc.data(), id:doc.id})
-          })
-          dispatch({type: 'SET_MONTHLY_TRANS', monthlyTrans})
-        }, err => {
-          unsubscribeMonthlyTrans()
-        })  
-        const unsubscribeLogs = firebase.firestore().collection('logs').onSnapshot(docs => {
-          let logs = []
-          docs.forEach(doc => {
-            logs.push({...doc.data(), id:doc.id})
-          })
-          dispatch({type: 'SET_LOGS', logs})
-        }, err => {
-          unsubscribeLogs()
-        })  
-      }
-    })*/
   }, [])
   return (
     <StoreContext.Provider value={{state, dispatch}}>
