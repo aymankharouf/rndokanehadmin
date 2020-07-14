@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
@@ -23,7 +23,6 @@ import Logout from './screens/logout'
 import { Ionicons } from '@expo/vector-icons'
 import { Button } from 'react-native-ui-lib'
 import { StoreContext } from './data/store'
-import { logout } from './data/actionst'
 
 const LogoTitle = (props: any) => {
   return (

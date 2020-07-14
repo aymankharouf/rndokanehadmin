@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import * as Animatable from 'react-native-animatable'
+import * as Animatable from 'react-native-animatable';
 import { AnimatableManager, ThemeManager, Colors, BorderRadiuses, ListItem, Text, FloatingButton, Dialog, LoaderScreen, Button, View } from 'react-native-ui-lib'
 import { FlatList, StyleSheet } from 'react-native'
 import labels from '../data/labels'
@@ -11,7 +11,6 @@ import { productOfText, getCategoryName } from '../data/actionst'
 import { randomColors } from '../data/config'
 import SearchButton from './search-button'
 import { iProduct } from '../data/interfaces'
-import { FadeInFromBottomAndroidSpec, FadeOutToBottomAndroidSpec } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionSpecs'
 
 interface iAction {
   label: string,
@@ -60,16 +59,11 @@ const Products = (props: any) => {
     }
   }, [search, products])
   const renderItem = (item: iProduct) => {
-    //const animationProps = AnimatableManager.presets.fadeInRight;
-    //const imageAnimationProps = AnimatableManager.getRandomDelay();
     return (
-      //<Animatable.View animation={FadeInFromBottomAndroidSpec}>
+      <Animatable.View key={item.id} {...AnimatableManager.presets.fadeIn}>
         <ListItem
-          //activeBackgroundColor={Colors.dark60}
-          //activeOpacity={0.3}
           height={80}
           containerStyle={styles.border}
-          //style={{alignItems: 'center'}}
           onPress={() => props.navigation.navigate('ProductPacks', {id: item.id})}
         >
           <ListItem.Part>
@@ -81,7 +75,7 @@ const Products = (props: any) => {
             <Text style={{fontSize: 12, color: 'green'}}>{productOfText(item.trademark, item.country)}</Text>
           </ListItem.Part>
         </ListItem>
-      //</Animatable.View>
+      </Animatable.View>
     )
   }
   const handleAction = (actionType: iAction) => {

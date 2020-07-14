@@ -21,7 +21,7 @@ const AddCountry = (props: any) => {
       }
       addCountry(name)
       dispatch({type: 'SET_MESSAGE', payload: {type: 'm', text: labels.addSuccess}})
-      props.navigation.goBack()
+      props.navigation.navigate('Home')
     } catch(err) {
       dispatch({type: 'SET_MESSAGE', payload: {type: 'e', text: getMessage(props.route.name, err)}})
 		}

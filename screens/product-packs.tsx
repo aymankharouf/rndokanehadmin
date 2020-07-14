@@ -58,7 +58,7 @@ const ProductPacks = (props: any) => {
           if (product) {
             deleteProduct(product)
             dispatch({type: 'SET_MESSAGE', payload: {type: 'm', text: labels.deleteSuccess}})
-            props.navigation.goBack()
+            props.navigation.navigate('Home')
           }
         }},
         {text: labels.cancel, style: 'cancel'},
@@ -72,8 +72,6 @@ const ProductPacks = (props: any) => {
   const renderItem = (item: iPack) => {
     return (
       <ListItem
-        //activeBackgroundColor={Colors.dark60} todo
-        //activeOpacity={0.3}
         containerStyle={styles.border}
         onPress={() => props.navigation.navigate('PackDetails', {id: item.id})}
       >

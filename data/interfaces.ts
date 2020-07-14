@@ -23,7 +23,23 @@ export interface iStore {
 }
 export interface iBasketPack {
   packId: string,
-  orderId: string
+  productName?: string,
+  productAlias?: string,
+  packName?: string,
+  imageUrl?: string,
+  orderId?: string,
+  cost?: number,
+  actual?: number,
+  price?: number,
+  quantity?: number,
+  weight?: number,
+  requested?: number,
+  isOffer?: boolean,
+  exceedPriceType?: string,
+  isDivided?: boolean,
+  closeExpired?: boolean,
+  refPackId?: string,
+  refPackQuantity?: number
 }
 export interface iBasket {
   storeId: string,
@@ -31,6 +47,8 @@ export interface iBasket {
 }
 export interface iReturnBasket {
   type: string,
+  storeId: string,
+  purchaseId: string,
   packs: iBasketPack[]
 }
 export interface iUser {
@@ -106,47 +124,15 @@ export interface iMessage {
   type: string,
   text: string
 }
-export interface iState {
-  categories: iCategory[],
-  locations: iLocation[],
-  countries: iCountry[],
-  stores: iStore[],
-  basket?: iBasket,
-  users: iUser[],
-  purchases: iPurchase[],
-  archivedPurchases?: iPurchase[],
-  orders: iOrder[],
-  archivedOrders?: iOrder[],
-  stockTrans: iStockTrans[],
-  archivedStockTrans?: iStockTrans[],
-  products: iProduct[],
-  archivedProducts?: iProduct[],
-  packs: iPack[],
-  archivedPacks?: iPack[],
-  passwordRequests: iPasswordRequest[],
-  customers: iCustomer[],
-  spendings: iSpending[],
-  orderBasket?: iBasketPack[],
-  returnBasket?: iReturnBasket,
-  monthlyTrans: iMonthlyTrans[],
-  packPrices: iPackPrice[]
-  logs: iLog[],
-  adverts: iAdvert[],
-  notifications: iNotification[],
-  alarms: iAlarm[],
-  ratings: iRating[],
-  invitations: iInvitation[],
-  storePayments: iStorePayment[],
-  message?: iMessage,
-  categoriesStatus?: string,
-  productsStatus?: string
-}
 
-export interface iState2 {
+export interface iState {
   user?: firebase.User,
   categories: iCategory[],
   countries: iCountry[],
   products: iProduct[],
+  basket?: iBasket,
+  orderBasket?: iBasketPack[],
+  returnBasket?: iReturnBasket,
   packs: iPack[],
   packPrices: iPackPrice[],
   productsStatus?: string,
@@ -175,6 +161,6 @@ export interface iAction {
 }
 
 export interface iContext {
-  state: iState2,
+  state: iState,
   dispatch: React.Dispatch<iAction>
 }

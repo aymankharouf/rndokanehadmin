@@ -1,12 +1,12 @@
 import React from 'react'
 import Reducer from './reducer'
 import firebase from './firebase'
-import { iState2, iContext, iCategory, iPack, iPackPrice, iPasswordRequest, iAdvert, iLocation, iCountry, iProduct, iOrder, iUser, iNotification, iAlarm, iRating, iInvitation, iCustomer, iStore, iStorePayment, iPurchase, iStockTrans, iSpending, iMonthlyTrans, iLog } from './interfaces'
+import { iState, iContext, iCategory, iPack, iPackPrice, iPasswordRequest, iAdvert, iLocation, iCountry, iProduct, iOrder, iUser, iNotification, iAlarm, iRating, iInvitation, iCustomer, iStore, iStorePayment, iPurchase, iStockTrans, iSpending, iMonthlyTrans, iLog } from './interfaces'
 
 export const StoreContext = React.createContext({} as iContext)
 
 const Store = (props: any) => {
-  const initState: iState2 = {
+  const initState: iState = {
     categories: [],
     countries: [],
     products: [],
@@ -30,8 +30,8 @@ const Store = (props: any) => {
     logs: []
   }
   const [state, dispatch] = React.useReducer(Reducer, initState)
+  
   React.useEffect(() => {
-    const startTime = new Date()
     firebase.database().ref('categories').on('value', docs => {
       let categories: iCategory[] = []
       docs.forEach(doc => {

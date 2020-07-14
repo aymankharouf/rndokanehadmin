@@ -1,10 +1,10 @@
-import { iState2, iAction } from './interfaces'
+import { iState, iAction } from './interfaces'
 
-const Reducer = (state: iState2, action: iAction) => {
+const Reducer = (state: iState, action: iAction) => {
     let pack, packIndex, packs, nextQuantity, i
     const increment = [0.125, 0.25, 0.5, 0.75, 1]
     switch (action.type){
-      /*case 'ADD_TO_BASKET':
+      case 'ADD_TO_BASKET':
         pack = {
           packId: action.payload.pack.id,
           productName: action.payload.pack.productName,
@@ -31,54 +31,48 @@ const Reducer = (state: iState2, action: iAction) => {
           return {...state, basket: {...state.basket, packs: [...state.basket.packs, pack]}}
         }
       case 'INCREASE_QUANTITY':
-        pack = {
-          ...action.payload,
-          quantity: action.payload.quantity + 1
-        }
-        packs = state.basket?.packs.slice() || []
-        packIndex = packs.findIndex(p => p.packId === action.payload.packId)
-        packs.splice(packIndex, 1, pack)
-        return {...state, basket: {...state.basket, packs}}
-      case 'DECREASE_QUANTITY':
-        packs = state.basket?.packs.slice() || []
-        if (action.payload.isDivided) {
-          nextQuantity = 0
-          packIndex = packs.findIndex(p => p.packId === action.payload.packId && p.orderId === action.payload.orderId)
-        } else {
-          nextQuantity = action.payload.quantity - 1
-          packIndex = packs.findIndex(p => p.packId === action.payload.packId)
-        }
-        if (nextQuantity === 0) {
-          packs.splice(packIndex, 1)
-          if (packs.length === 0){
-            return {...state, basket: undefined}
-          }
-        } else {
+        if (state.basket) {
           pack = {
             ...action.payload,
-            quantity: nextQuantity
+            quantity: action.payload.quantity + 1
           }
+          packs = state.basket.packs.slice()
+          packIndex = packs.findIndex(p => p.packId === action.payload.packId)
           packs.splice(packIndex, 1, pack)
+          return {...state, basket: {...state.basket, packs}}
+        } else {
+          return state
         }
-        return {...state, basket: {...state.basket, packs}}
+      case 'DECREASE_QUANTITY':
+        if (state.basket) {
+          packs = state.basket.packs.slice()
+          if (action.payload.isDivided) {
+            nextQuantity = 0
+            packIndex = packs.findIndex(p => p.packId === action.payload.packId && p.orderId === action.payload.orderId)
+          } else {
+            nextQuantity = action.payload.quantity - 1
+            packIndex = packs.findIndex(p => p.packId === action.payload.packId)
+          }
+          if (nextQuantity === 0) {
+            packs.splice(packIndex, 1)
+            if (packs.length === 0){
+              return {...state, basket: undefined}
+            }
+          } else {
+            pack = {
+              ...action.payload,
+              quantity: nextQuantity
+            }
+            packs.splice(packIndex, 1, pack)
+          }
+          return {...state, basket: {...state.basket, packs}}
+        } else {
+          return state
+        }
       case 'CLEAR_BASKET':
         return {
           ...state,
           basket: undefined
-        }
-      case 'LOAD_ORDER_BASKET':
-        return {
-          ...state,
-          /*
-          todo
-          orderBasket: action.payload.order.basket.map(p => {
-            return {
-              ...p,
-              quantity: action.payload.type === 'e' ? p.quantity : p.purchased,
-              oldQuantity: action.payload.type === 'e' ? p.quantity : p.purchased
-            }
-          })
-          orderBasket: action.payload
         }
       case 'CLEAR_ORDER_BASKET':
         return {
@@ -99,7 +93,7 @@ const Reducer = (state: iState2, action: iAction) => {
         pack = {
           ...action.payload,
           quantity: nextQuantity,
-          gross: Math.round((action.payload.actual || action.payload.price) * nextQuantity)
+          gross: Math.round((action.payload.actual ?? action.payload.price) * nextQuantity)
         }
         packs = state.orderBasket?.slice() || []
         packIndex = packs.findIndex(p => p.packId === action.payload.packId)
@@ -129,7 +123,7 @@ const Reducer = (state: iState2, action: iAction) => {
         pack = {
           ...action.payload.pack,
           quantity: nextQuantity,
-          gross: Math.round((action.payload.pack.actual || action.payload.pack.price) * nextQuantity)
+          gross: Math.round((action.payload.pack.actual ?? action.payload.pack.price) * nextQuantity)
         }  
         packs = state.orderBasket?.slice() || []
         packIndex = packs.findIndex(p => p.packId === action.payload.pack.packId)
@@ -143,7 +137,9 @@ const Reducer = (state: iState2, action: iAction) => {
           quantity: action.payload.quantity,
           weight: action.payload.weight
         }
-        if (!state.returnBasket?.type) {
+        if (state.returnBasket) {
+            return {...state, returnBasket: {...state.returnBasket, packs: [...state.returnBasket.packs, pack]}}
+        } else {
           return {
             ...state, 
             returnBasket: {
@@ -153,54 +149,31 @@ const Reducer = (state: iState2, action: iAction) => {
               packs: [pack]
             }
           }
-        } else {
-          return {...state, returnBasket: {...state.returnBasket, packs: [...state.returnBasket.packs, pack]}}
         }
       case 'REMOVE_FROM_RETURN_BASKET':
-        const basket = state.returnBasket?.packs.slice() || []
-        packIndex = basket.findIndex(p => p.packId === action.payload.packId)
-        basket.splice(packIndex, 1)
-        if (basket.length === 0) {
-          return {
-            ...state,
-            returnBasket: undefined
+        if (state.returnBasket) {
+          const basket = state.returnBasket.packs.slice() || []
+          packIndex = basket.findIndex(p => p.packId === action.payload.packId)
+          basket.splice(packIndex, 1)
+          if (basket.length === 0) {
+            return {
+              ...state,
+              returnBasket: undefined
+            }
+          } else {
+            return {
+              ...state,
+              returnBasket: {...state.returnBasket, packs: basket}
+            }
           }
         } else {
-          return {
-            ...state,
-            returnBasket: {...state.returnBasket, packs: basket}
-          }  
+          return state
         }
       case 'CLEAR_RETURN_BASKET':
         return {
           ...state,
           returnBasket: undefined
-        }  
-      case 'ADD_ARCHIVED_ORDERS':
-        return {
-          ...state,
-          archivedOrders: state.archivedOrders?.push(action.payload)
-        }
-      case 'ADD_ARCHIVED_PURCHASES':
-        return {
-          ...state,
-          archivedPurchases: state.archivedPurchases?.push(action.payload)
-        }
-      case 'ADD_ARCHIVED_STOCK_TRANS':
-        return {
-          ...state,
-          archivedStockTrans: state.archivedStockTrans?.push(action.payload)
-        }
-      case 'SET_ARCHIVED_PRODUCTS':
-        return {
-          ...state,
-          archivedProducts: action.payload
-        }
-      case 'SET_ARCHIVED_PACKS':
-        return {
-          ...state,
-          archivedPacks: action.payload
-        }*/
+        } 
       case 'SET_CATEGORIES':
         return {
           ...state,

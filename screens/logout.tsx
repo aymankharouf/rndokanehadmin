@@ -6,7 +6,7 @@ import { Text } from 'react-native'
 const Logout = (props: any) => {
   React.useEffect(() => {
     logout()
-    props.navigation.goBack()
+    props.navigation.navigate('Home')
   }, [])
   return (
     <SafeAreaView style={{ flex: 1 }}>
