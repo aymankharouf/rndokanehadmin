@@ -83,7 +83,7 @@ const Products = (props: any) => {
     actionType.action()
   }
   let i = 0
-  if (!state.productsStatus) return <LoaderScreen color={Colors.blue30} overlay />
+  if (state.products.length === 0) return <LoaderScreen color={Colors.blue30} overlay />
   return (
     <SafeAreaView style={{flex: 1}}>
       {showAllVisible ? <View style={{alignItems: 'center'}}><Button outline size="xSmall" style={{width: '50%', marginBottom: 5}} label={labels.showAll} onPress={() => setSearch('')} /></View>: null}
