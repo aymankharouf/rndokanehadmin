@@ -23,7 +23,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "io.expo.rnadmin"
+    },
+    "android": {
+      "package": "io.expo.rnadmin"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }
