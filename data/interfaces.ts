@@ -9,7 +9,10 @@ export interface iError {
 }
 export interface iCategory {
   id: string,
-  name: string
+  name: string,
+  parentId: string,
+  ordering: number,
+  isLeaf: boolean
 }
 export interface iLocation {
 
@@ -58,6 +61,7 @@ export interface iPurchase {
 
 }
 export interface iOrder {
+  id: string,
   basket: iBasketPack[]
 }
 export interface iStockTrans {
@@ -82,7 +86,22 @@ export interface iPack {
   id: string,
   name: string,
   productId: string,
-  price: number
+  price: number,
+  productName: string,
+  productAlias: string,
+  productDescription: string,
+  imageUrl: string,
+  categoryId: string,
+  sales: number,
+  rating: number,
+  ratingCount: number,
+  isOffer: boolean,
+  offerEnd: Date,
+  weightedPrice: number,
+  isDivided: boolean,
+  trademark: string,
+  country: string,
+  closeExpired: boolean
 }
 export interface iPasswordRequest {
 

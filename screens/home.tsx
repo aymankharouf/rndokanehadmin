@@ -3,10 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Button } from 'react-native-ui-lib'
 import labels from '../data/labels'
 import { randomColors } from '../data/config'
-import { StoreContext } from '../data/store'
 
 const Home = (props: any) => {
-  const { state } = React.useContext(StoreContext)
   const [mainPages] = useState(() => [
     {name: labels.orders, path: 'Orders'},
     {name: labels.stores, path: 'Stores'},

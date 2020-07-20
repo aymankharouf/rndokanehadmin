@@ -1,17 +1,16 @@
-import React from 'react'
+import React from 'react';
+import { View } from 'react-native';
 import { logout } from '../data/actionst'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { Text } from 'react-native'
 
 const Logout = (props: any) => {
   React.useEffect(() => {
-    logout()
-    props.navigation.navigate('Home')
-  }, [])
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Text>PackDetails</Text>
-    </SafeAreaView>  )
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      logout()
+    })
+    return unsubscribe;
+  }, [props.navigation]);
+
+  return <View />;
 }
 
 export default Logout

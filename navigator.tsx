@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, Link } from '@react-navigation/native'
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { Image } from 'react-native'
@@ -19,10 +19,10 @@ import AddProduct from './screens/add-product'
 import ProductPacks from './screens/product-packs'
 import ProductDetails from './screens/product-details'
 import AddPack from './screens/add-pack'
-import Logout from './screens/logout'
 import { Ionicons } from '@expo/vector-icons'
-import { Button } from 'react-native-ui-lib'
+import { Button, Text } from 'react-native-ui-lib'
 import { StoreContext } from './data/store'
+import Logout from './screens/logout'
 
 const LogoTitle = (props: any) => {
   return (
